@@ -37,10 +37,15 @@ set :linked_files, fetch(:linked_files, []).push('.rbenv-vars')
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-set :rbenv_type, :user
-set :rbenv_ruby, '2.2.2'
-set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
-set :rbenv_map_bins, %w{rake gem bundle ruby rails}
+# set :rbenv_type, :user
+# set :rbenv_ruby, '2.2.2'
+# set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
+# set :rbenv_map_bins, %w{rake gem bundle ruby rails}
+set :default_env, {
+  PATH: '$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH',
+  RBENV_ROOT: '~/.rbenv',
+  RBENV_VERSION: '2.2.2'
+}
 
 set :unicorn_config_path, -> { File.join(current_path, 'config', 'unicorn.rb') }
 
