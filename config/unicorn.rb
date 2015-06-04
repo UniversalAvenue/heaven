@@ -13,7 +13,7 @@ timeout 15
 preload_app true
 
 # listen
-listen '/tmp/sockets/unicorn.socket', backlog: 64
+# listen '/tmp/sockets/unicorn.socket', backlog: 64
 
 # logging
 stderr_path 'log/unicorn.stderr.log'
