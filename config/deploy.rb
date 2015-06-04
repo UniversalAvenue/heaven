@@ -50,7 +50,6 @@ set :default_env, {
 set :unicorn_config_path, -> { File.join(current_path, 'config', 'unicorn.rb') }
 
 # resque
-set :workers, events: 1
 set :resque_environment_task, true
 set :resque_log_file, 'log/resque.log'
 
