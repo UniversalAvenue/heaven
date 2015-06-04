@@ -15,7 +15,7 @@ gem "faraday_middleware"
 # Providers
 gem "dpl",        "1.5.7"
 gem "aws-sdk"
-gem "capistrano", "2.9.0"
+gem "capistrano", "3.4.0" # also deployment
 
 # Notifiers
 gem "hipchat"
@@ -37,6 +37,10 @@ group :development do
   gem "meta_request"
   gem "better_errors"
   gem "binding_of_caller"
+
+  # deployment
+  gem 'capistrano3-unicorn'
+  gem 'capistrano-rails', '~> 1.1'
 end
 
 group :staging, :production do
