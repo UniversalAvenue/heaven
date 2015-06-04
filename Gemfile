@@ -42,6 +42,7 @@ group :development do
   gem 'capistrano3-unicorn'
   gem 'capistrano-rails', '~> 1.1'
   gem 'capistrano-rbenv', '~> 2.0'
+  gem "capistrano-resque", "~> 0.2.2", require: false
 end
 
 group :staging, :production do

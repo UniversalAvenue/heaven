@@ -44,6 +44,11 @@ set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 
 set :unicorn_config_path, -> { File.join(current_path, 'config', 'unicorn.rb') }
 
+# resque
+set :workers, 1
+set :resque_environment_task, true
+set :resque_log_file, 'log/resque.log'
+
 namespace :deploy do
   # after :restart, :clear_cache do
   #   on roles(:web), in: :groups, limit: 3, wait: 10 do
@@ -57,3 +62,4 @@ namespace :deploy do
     invoke 'unicorn:restart'
   end
 end
+after 'deploy:restart', 'resque:restart'

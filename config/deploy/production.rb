@@ -3,7 +3,7 @@
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
 
-server 'marvin.universalavenue.com', user: 'heaven', roles: %w{app db web}
+server 'marvin.universalavenue.com', user: 'heaven', roles: %w{app db web resque_worker resque_scheduler}
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 
