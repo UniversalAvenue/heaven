@@ -45,7 +45,7 @@ set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :unicorn_config_path, -> { File.join(current_path, 'config', 'unicorn.rb') }
 
 # resque
-set :workers, 1
+set :workers, events: 1
 set :resque_environment_task, true
 set :resque_log_file, 'log/resque.log'
 
