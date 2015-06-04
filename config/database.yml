@@ -25,3 +25,5 @@ production:
   host: localhost
   pool: 5
   timeout: 5000
+  user: heaven
+  password: <%= ENV['HEAVEN_DATABASE_PASSWORD'] %>
