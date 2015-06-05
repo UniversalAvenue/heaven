@@ -41,7 +41,7 @@ module Heaven
         if File.exist?(executable_path)
           executable_path
         else
-          "bin/#{name}"
+          name
         end
       end
 
