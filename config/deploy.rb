@@ -53,6 +53,7 @@ set :unicorn_config_path, -> { File.join(current_path, 'config', 'unicorn.rb') }
 # resque
 set :resque_environment_task, true
 set :resque_log_file, 'log/resque.log'
+set :workers, '*' => 2
 
 namespace :deploy do
   # after :restart, :clear_cache do
