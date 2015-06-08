@@ -28,7 +28,7 @@ module LocalLogFile
     File.open(stderr_file, "a") { |f| f.write(err.force_encoding("utf-8")) }
   end
 
-  def execute_and_log(cmds, env = {})
+  def execute_and_log(cmds, env = {}, fail_on_error = true)
     # Don't add single/double quotes around to any cmd in cmds.
     # For example,
     #   cmds = ["my_command", "'foo=bar lazy=true'"] will fail
@@ -39,7 +39,7 @@ module LocalLogFile
     log_stdout(last_child.out)
     log_stderr(last_child.err)
 
-    unless last_child.success?
+    if fail_on_error && !last_child.success?
       fail StandardError, "Task failed: #{cmds.join(" ")}"
     end
 

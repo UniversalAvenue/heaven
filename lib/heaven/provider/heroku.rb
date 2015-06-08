@@ -120,12 +120,25 @@ module Heaven
           sleep 10
           build.refresh!
         end
+
+        return unless build.success?
+        log_to_slack text: 'Build app on heroku - OK', success: true, chat_room: custom_payload['notify']['room']
+
+        post_build_tasks.each do |task|
+          execute_and_log ['heroku', 'run', '--app', app_name, task], {}, false
+          log_to_slack(
+            text: "Running #{task} on heroku - " + last_child.success? ? 'OK' : 'failed',
+            success: last_child.success?,
+            chat_room: custom_payload['notify']['room'])
+        end
       end
 
       def notify
+        update_output
+
         if build
-          output.stderr = build.stderr
-          output.stdout = build.stdout
+          output.stderr = build.stderr + output.stderr
+          output.stdout = build.stdout + output.stdout
         else
           output.stderr = "Unable to create a build"
         end
@@ -151,6 +164,14 @@ module Heaven
           }
           req.body = JSON.dump(body)
         end
+      end
+
+      def post_build_tasks
+        custom_payload_config['after_build'] || []
+      end
+
+      def log_to_slack(message)
+        Resque.enqueue SimpleSlackPost, message
       end
     end
   end
