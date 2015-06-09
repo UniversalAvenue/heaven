@@ -10,9 +10,13 @@ module Heaven
         slack_account.ping '',
           channel: "##{message['chat_room']}",
           attachments: [{
-            text: message['text'],
+            text: slack_formatted(message['text']),
             color: message['success'] ? 'good' : 'danger',
           }]
+      end
+
+      def self.slack_formatted(message)
+        Slack::Notifier::LinkFormatter.format(message)
       end
 
       def self.slack_webhook_url

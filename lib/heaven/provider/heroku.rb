@@ -11,7 +11,7 @@ module Heaven
           :headers => {
             "Accept"        => "application/vnd.heroku+json; version=3",
             "Content-Type"  => "application/json",
-            "Authorization" => Base64.encode64(":#{ENV["HEROKU_API_KEY"]}")
+            "Authorization" => Base64.encode64(":#{api_key}")
           }
         }
       end
@@ -22,6 +22,16 @@ module Heaven
           faraday.adapter Faraday.default_adapter
           faraday.response :logger unless %w{staging production}.include?(Rails.env)
         end
+      end
+
+      def api_key
+        user_api_key || ENV['HEROKU_API_KEY']
+      end
+
+      def user_api_key
+        JSON.parse(ENV['HEROKU_API_KEYS'])[chat_user]
+      rescue StandardError
+        nil
       end
     end
 
@@ -123,8 +133,11 @@ module Heaven
           build.refresh!
         end
 
+        log_to_slack(
+          text: "[Build app on heroku](https://dashboard.heroku.com/apps/#{app_name}/activity/builds/#{build.id}) - #{build.success? ? 'OK' : 'failed'}",
+          success: build.success?,
+          chat_room: custom_payload['notify']['room'])
         return unless build.success?
-        log_to_slack text: 'Build app on heroku - OK', success: true, chat_room: custom_payload['notify']['room']
 
         post_build_tasks.each do |task|
           execute_and_log ['heroku', 'run', '--exit-code', '--app', app_name, task], {}, false

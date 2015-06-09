@@ -108,6 +108,10 @@ module Heaven
         custom_payload && custom_payload["config"]
       end
 
+      def chat_user
+        custom_payload["notify"]["user"] || "unknown"
+      end
+
       def setup
         credentials.setup!
 

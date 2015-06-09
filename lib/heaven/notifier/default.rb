@@ -178,7 +178,11 @@ module Heaven
       end
 
       def user_link
-        "[#{chat_user}](#{octokit_web_endpoint}#{chat_user})"
+        "[#{chat_user}](#{octokit_web_endpoint}#{creator_name})"
+      end
+
+      def creator_name
+        (deployment['creator'] && deployment['creator']['login']) || chat_user
       end
 
       def output_link(link_title = "deployment")
