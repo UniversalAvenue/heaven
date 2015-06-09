@@ -129,7 +129,7 @@ module Heaven
         post_build_tasks.each do |task|
           execute_and_log ['heroku', 'run', '--exit-code', '--app', app_name, task], {}, false
           log_to_slack(
-            text: "Running #{task} on heroku - " + last_child.success? ? 'OK' : 'failed',
+            text: "Running #{task} on heroku - #{last_child.success? ? 'OK' : 'failed'}",
             success: last_child.success?,
             chat_room: custom_payload['notify']['room'])
         end

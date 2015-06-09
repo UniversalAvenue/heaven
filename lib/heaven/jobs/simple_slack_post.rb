@@ -5,13 +5,13 @@ module Heaven
       @queue = :deployment_statuses
 
       def self.perform(message)
-        Rails.logger.info "slack: #{message[:text]}"
+        Rails.logger.info "slack: #{message['text']}"
 
         slack_account.ping '',
-          channel: "##{message[:chat_room]}",
+          channel: "##{message['chat_room']}",
           attachments: [{
-            text: message[:text],
-            color: message[:success] ? 'good' : 'danger',
+            text: message['text'],
+            color: message['success'] ? 'good' : 'danger',
           }]
       end
 
