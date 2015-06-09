@@ -1,3 +1,5 @@
+require_relative '../jobs/simple_slack_post'
+
 module Heaven
   # Top-level module for providers.
   module Provider
@@ -171,7 +173,7 @@ module Heaven
       end
 
       def log_to_slack(message)
-        Resque.enqueue SimpleSlackPost, message
+        Resque.enqueue Heaven::Jobs::SimpleSlackPost, message
       end
     end
   end
