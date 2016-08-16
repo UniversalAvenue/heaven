@@ -141,7 +141,7 @@ module Heaven
 
         post_build_tasks.each do |task|
           if task.split.first == 'run'
-            execute_and_log ['heroku', 'run', '--exit-code', '--app', app_name, task], {}, false
+            execute_and_log ['heroku', task, '--exit-code', '--app', app_name], {}, false
           else
             execute_and_log ['heroku', task, '--app', app_name], {}, false
           end
