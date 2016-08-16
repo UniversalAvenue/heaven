@@ -140,7 +140,11 @@ module Heaven
         return unless build.success?
 
         post_build_tasks.each do |task|
-          execute_and_log ['heroku', 'run', '--exit-code', '--app', app_name, task], {}, false
+          if task.split.first == 'run'
+            execute_and_log ['heroku', 'run', '--exit-code', '--app', app_name, task], {}, false
+          else
+            execute_and_log ['heroku', task, '--app', app_name], {}, false
+          end
           log_to_slack(
             text: "Running #{task} on heroku - #{last_child.success? ? 'OK' : 'failed'}",
             success: last_child.success?,
